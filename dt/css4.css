@@ -1,0 +1,7 @@
+.css3s-item{width: 277px;height: 277px;text-align: center; transition:all 10s ; padding: 60px 15px; box-sizing: border-box;border: 1px solid skyblue;}
+.css3s-item:hover{position: absolute;top:-10px ; border: 2px solid red;}
+.css3s-max{position: relative; margin-bottom: 100px;  }
+.tex{color: #666666;font-size: 13px;}
+.navs{height: 200px;border: skyblue 1px solid;display: flex; flex-direction: column;justify-content: space-around;width: 40px;position: fixed;right: 0px;top: 40vh;}
+#app{position: relative;}
+.bac{background-color: tomato;}

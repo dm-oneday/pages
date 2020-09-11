@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css4.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .conter {
+            padding-left: 100px;
+            padding-right: 100px;
+            box-sizing: border-box;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .p1 {
+            display: flex;
+            justify-content: space-between;
+            background-color: rgb(7, 117, 251);
+            height: 98px;
+            line-height: 98px;
+            color: white;
+            font-size: 18px;
+            position: fixed;
+            top: 0px;
+            width: 100%;
+        }
+
+        .p2 {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .p2 div {
+            padding: 0px 10px;
+        }
+
+        .p3 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        a:hover {
+            cursor: pointer;
+        }
+
+        .p2 .login {
+            display: inline-block;
+            border: 1px solid white !important;
+            border-radius: 5px;
+            text-align: center;
+            width: 75px;
+            line-height: 34px;
+            color: white;
+            background-color: rgb(7, 117, 251);
+        }
+
+        .mains {
+            margin-top: 98px;
+            background-image: url('./2.png');
+            width: 100%;
+            height: 500px;
+            background-color: rgb(7, 117, 251);
+            background-size: cover;
+        }
+
+        .main-one {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 30%;
+        }
+
+        .main-title {
+            font-size: 50px;
+            color: white;
+        }
+
+        .main-title1 {
+            font-size: 25px;
+            color: white;
+            margin-top: 30px;
+        }
+
+        .main-title2 {
+            font-size: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .main-title2 div:nth-child(2) {
+            margin-left: 40px;
+        }
+
+        .p2 a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .p2 div:hover {
+            border-bottom: 2px white solid;
+        }
+
+        .p2 div:nth-child(6) {
+            border: none;
+        }
+
+        a:hover {
+            cursor: pointer;
+        }
+
+        .main-title2 div {
+            border: 1px white solid;
+            border-radius: 5px;
+            width: 130px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+        }
+
+        .css3s-one {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="p1 conter " :class='{"col1":ibl}'>
+            <div class="p3">
+                <img src="./1.png" alt="">
+            </div>
+            <div class="p2">
+                <div><a href="">首页</a> </div>
+                <div><a href="">关于我们</a> </div>
+                <div><a href="">新闻动态</a> </div>
+                <div><a href="">品牌招商</a> </div>
+                <div><a href="">联系我们</a> </div>
+                <div><a class="login">登录</a> </div>
+            </div>
+        </div>
+        <!-- 中间内容 -->
+        <div class="conter mains" ref='newConBox'>
+            <div class="main-one">
+                <div>
+                    <div class="main-title">喜推&nbsp;新的销售方式</div>
+                    <div class="main-title1">人工智能名片&nbsp;帮助企业释放品牌价值</div>
+                </div>
+                <div class="main-title2">
+                    <div>免费试用</div>
+                    <div>申请代理</div>
+                </div>
+            </div>
+        </div>
+        <div class="conter css3s" v-for='item in list' :id="item.nams">
+            <div class="css3s-one">
+                <div><img src="./3.png" alt=""></div>
+                <div class="css3s-title">真实流量智能分发，品效合一</div>
+                <div><img src="./4.png" alt=""></div>
+            </div>
+            <div class="css3s-max">
+                <div class="css3s-item" ref='scfs'>
+                    <div><img src="./5.png" alt=""></div>
+                    <h3>一站式销售</h3>
+                    <div class="tex">营销与销售无缝衔接，实现供应、营销、销售、服务价值链串联</div>
+                </div>
+            </div>
+        </div>
+        <div class="navs" v-if="blr">
+            <div v-for='(item,index) in list' :class="{'bac':num==item.id}" @click="tol(item.id)"> <a
+                    :href="num==item.id?list[num].urls:undefined"> 你好</a></div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            num: 0,
+            ibl: false,
+            list: [
+            { id: 0, urls: "#top", nams: 'top' },
+            { id: 1, urls: "#one", nams: 'one' },
+            { id: 2, urls: "#two", nams: 'two' },
+            { id: 3, urls: "#therr", nams: 'therr' }],
+            blr: false
+        },
+        methods: {
+            handleScroll() {
+                var top = document.body.scrollTop || document.documentElement.scrollTop || window.pageXOffset
+                console.log(top)
+            },
+            tol(id) {
+                console.log('我调用了吗', id);
+                this.$nextTick(function () {
+                    this.num = id
+                })
+            }
+        },
+        mounted() {
+            var _this = this
+            window.addEventListener('scroll', function () {
+                let tops = _this.$refs.newConBox.getBoundingClientRect().top
+                let tops2 = _this.$refs.scfs[0].getBoundingClientRect().top
+                if (tops2 < 175 && tops2 > -75) {
+                    _this.tol(_this.list[0].id)
+                } else if (tops2 < -75 && tops2 > -375) {
+                    _this.tol(_this.list[1].id)
+                } else if (tops2 < -375 && tops2 > -500) {
+                    _this.tol(_this.list[2].id)
+                } else if (tops2 < -450 && tops2 > -530) {
+                    _this.tol(_this.list[3].id)
+                }
+                if (tops < -200) {
+                    _this.blr = true
+                } else {
+                    _this.blr = false
+                }
+            }, true)
+        }
+
+    })
+
+
+
+
+
+
+
+
+
+
+
+</script>
