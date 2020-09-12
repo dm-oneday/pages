@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        .pages-max {
+            display: flex;
+        }
+
+        .pages-max div {
+            border: 1px solid black;
+        }
+
+        .ske {
+            background-color: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+
+        <div v-for="item in tulist">
+            <div>{{item.title}}</div>
+            <img :src="item.url" alt="">
+        </div>
+        <div class="pages-max">
+            <div @click="tol('headers')">首页</div>
+            <div @click="tol('toppages')">上一页</div>
+            <div v-for="(item,index) in list" @click="tol(index)" :class="{'ske':num==index}">{{index}}</div>
+            <div @click="tol('buttompages')"> 下一页</div>
+            <div @click="tol('footerpages')">末页</div>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                num: 0,
+                list: Array(50),
+                reqnum: 4,
+                tulist: []
+            }, methods: {
+                init() {
+                    this.reqnum = 4
+                    return
+                },
+                tol(str) {
+                    if (str == 'headers') {
+                        this.num = 0
+                        this.laz(this.num)
+                    }
+                    else if (str == 'toppages') {
+                        console.log(this.num);
+                        this.num = this.num - 1
+                        this.laz(this.num)
+                        if (this.num <= 0) {
+                            this.num = 0
+                            this.laz(this.num)
+                        }
+                    } else if (str == 'buttompages') {
+                        console.log(this.num);
+                        this.num = this.num + 1
+                        this.laz(this.num)
+                        if (this.num >= 49) {
+                            this.num = 49
+                            this.laz(this.num)
+                        }
+                    } else if (str == 'footerpages') {
+                        this.num = 49
+                        this.laz(this.num)
+                    } else {
+                        this.laz(str)
+                    }
+                  
+                },
+                laz(str) {
+                    var _this = this
+                    if (str == undefined) {
+                        return
+                    }
+                    var timers = setTimeout (function () {  
+                        console.log('我執行了');
+                        
+                        _this.num = str
+                        _this.reqnum = _this.reqnum * str
+                        console.log(_this.reqnum);
+                        axios.get(`https://fakerapi.it/api/v1/images?_quantity=${_this.reqnum}`).then(res => {
+                            _this.tulist = res.data.data
+                            let arrnum = _this.reqnum - 4
+                            _this.tulist = _this.tulist.slice(arrnum)
+                            _this.reqnum = 4
+                        }, 1000)
+                    })
+                   
+                }
+            }, mounted() {
+                this.$nextTick(function () {
+                    axios.get(`https://fakerapi.it/api/v1/images?_quantity=${this.reqnum}`).then(res => {
+                        console.log(res);
+                        this.tulist = res.data.data
+
+                    })
+                })
+            }
+        })
+
+    </script>
+</body>
+
+</html>
